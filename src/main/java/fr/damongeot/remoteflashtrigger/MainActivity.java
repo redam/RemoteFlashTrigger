@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
     public final static String LISTENING_PORT = "listen_port";
     public final static int LISTENING_PORT_DEF = 8081;
+    public final static String START_AT_BOOT = "start_at_boot";
+    public final static boolean START_AT_BOOT_DEF = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
