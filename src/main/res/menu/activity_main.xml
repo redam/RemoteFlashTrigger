@@ -4,4 +4,6 @@
 
     <item android:title="@string/preferences"
         android:id="@+id/item_preferences" />
+    <item android:title="@string/about"
+        android:id="@+id/item_about" />
 </menu>

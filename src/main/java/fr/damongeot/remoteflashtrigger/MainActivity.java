@@ -69,10 +69,15 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.item_preferences:
-                Intent i = new Intent(MainActivity.this, fr.damongeot.remoteflashtrigger.PreferenceActivity.class);
+                i = new Intent(MainActivity.this, fr.damongeot.remoteflashtrigger.PreferenceActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.item_about:
+                i = new Intent(MainActivity.this, fr.damongeot.remoteflashtrigger.AboutActivity.class);
                 startActivity(i);
                 return true;
             default:

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
@@ -129,13 +131,13 @@ public class NetworkListenService extends IntentService {
     private void setFlash(boolean state) {
         if(isFlashOn == state) return;
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             //use camera1 API before LOLLIPOP
 
             //get camera parameters if not already done
             if (mCamera == null) {
                 try {
-                    mCamera = Camera.open();
+                    mCamera = android.hardware.Camera.open();
                     params = mCamera.getParameters();
                 } catch (RuntimeException e) {
                     Log.d(TAG, e.getMessage());
@@ -144,18 +146,27 @@ public class NetworkListenService extends IntentService {
             }
 
             if (state) {
-                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                params.setFlashMode(android.hardware.Camera.Parameters.FLASH_MODE_TORCH);
                 mCamera.setParameters(params);
+                SurfaceTexture mPreviewTexture = new SurfaceTexture(0);
+                try {
+                    mCamera.setPreviewTexture(mPreviewTexture);
+                } catch (IOException e) {
+                    //dont care
+                    e.printStackTrace();
+                }
                 mCamera.startPreview();
                 Log.d(TAG, "setFlash() : flash on");
             } else {
-                params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                params.setFlashMode(android.hardware.Camera.Parameters.FLASH_MODE_OFF);
                 mCamera.setParameters(params);
                 mCamera.stopPreview();
-                Log.d(TAG, "setFlash() : flash on");
+                Log.d(TAG, "setFlash() : flash off");
             }
         } else {
-            //use camera2 api for LOLLIPOP and UP
+            //use camera2 api for Marshmallow and UP
+            if(! getApplicationContext().getPackageManager()
+            .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) Log.d(TAG,"No flash available");
 
             CameraManager mCamManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
             String cameraId = null; // Usually front camera is at 0 position.

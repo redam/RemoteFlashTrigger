@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:required="true" android:name="android.hardware.camera.flash" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -36,6 +38,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

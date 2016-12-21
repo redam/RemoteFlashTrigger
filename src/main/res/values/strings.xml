@@ -4,4 +4,6 @@
     <string name="pref_port">Port</string>
     <string name="service_status">Service status</string>
     <string name="preferences">Preferences</string>
+    <string name="about">About</string>
+    <string name="read_privacy_policy"><a href="https://blog.damongeot.fr/remote-flash-trigger-privacy-policy/">Read our privacy policy</a></string>
 </resources>
